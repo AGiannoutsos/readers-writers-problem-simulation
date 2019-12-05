@@ -15,15 +15,16 @@
 int main(int argc,char **argv){
 
     int rwRatio, shmSize, peers;
-    ShmData* data; int shmId;
+    ShmData* shmData; int shmId;
     pid_t pid;
+    int readId, writeId, semId;
 
     if (argc != 4){
         printf(" Error wrong input \n");
         //return 0;
     }
     peers   = atoi(argv[--argc]);
-    rwRatio = atoi(argv[--argc]);
+    rwRatio = atoi(argv[--argc]) -1; //for inputs between (1 and 100) -> (1% - 100%)
     shmSize = atoi(argv[--argc]);
     
     srand(getpid());
@@ -31,19 +32,22 @@ int main(int argc,char **argv){
     printf("%d %d\n", rwRatio,shmSize+5);
 
     // initialize the shared matrix
-    shmId = ShmInit((key_t)1234, shmSize);
-    data = ShmAt(shmId);
+    shmId = ShmInit((key_t)1, shmSize);
+    shmData = ShmAt(shmId);
     for(int i=0; i<shmSize; i++){
-        data[i].avTime = 0;
-        data[i].writes = 0;
-        data[i].reads = 0;
+        shmData[i].avTime = 0;
+        shmData[i].writes = 0;
+        shmData[i].reads = 0;
     }
 
     // initialize array for clild pid
     pid_t childPid[peers];
 
     // initialize semaphores
-    int semId = SemInit((key_t)12345, 1);
+    semId   = SemInit((key_t)2000, 1);
+    readId  = SemInit((key_t)3000, shmSize);
+    writeId = SemInit((key_t)4000, shmSize);
+
 
     for (int i = 0; i < peers; i++){
         pid = fork();
@@ -57,10 +61,29 @@ int main(int argc,char **argv){
 
     }
     else{ // if child
+        srand(getpid());
+        int reads   = 0;
+        int writes  = 0;
+        int entry   = 0;
 
+        for (int i = 0; i < 100000; i++){ // Repeat r/w process 10 times
+        
+            if (rand()%100 > rwRatio){ //Writer
+
+                entry = rand()%shmSize;  //Get a random shared value
+
+                SemDown(writeId, 0);
+                shmData[entry].writes++;
+                SemUp(writeId, 0);
+
+            } else { //Reader
+                
+            }
+        }
+        
     }
 
-    
+/*  
     int n;
     switch(pid)
 	{
@@ -80,19 +103,20 @@ int main(int argc,char **argv){
     for (int i = 0; i < n; i++){
         if(pid != 0){
             SemDown(semId,0);
-            data[0].writes++;
+            shmData[0].writes++;
             SemUp(semId,0);
         }   
         else{
             SemDown(semId,0);
-            data[0].writes--;
+            shmData[0].writes--;
             SemUp(semId,0);
         }
             
     }
-
+*/
     if (pid != 0){ //terminate child processes
-        printf("shared = %d\n",data[0].writes);
+        
+        
         int status;
         pid_t childTerminatedPid;
 
@@ -105,7 +129,12 @@ int main(int argc,char **argv){
             else
                 printf("Child terminated abnormally\n");
         }
-        
+        int sum=0;
+        for (int i = 0; i < shmSize; i++){
+            printf("shared = %d\n",shmData[i].writes);
+            sum += shmData[i].writes;
+        }
+        printf("suuum -> %d\n",sum);
 		
 		exit(0);
 	}
@@ -116,7 +145,7 @@ int main(int argc,char **argv){
 
 
 
-    ShmDt(data);
+    ShmDt(shmData);
     ShmDea(shmId);
 
 
