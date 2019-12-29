@@ -1,0 +1,68 @@
+Child with pid: 3083
+Total write time: 3  average read  time: 1.000000
+Total read  time: 17693  average write time: 2211.000000
+Total       time: 17696  average total time: 1769.000000
+
+Child with pid: 3086
+Total write time: 13  average read  time: 6.000000
+Total read  time: 26790  average write time: 3348.000000
+Total       time: 26803  average total time: 2680.000000
+
+Child with pid: 3085
+Total write time: 11866  average read  time: 3955.000000
+Total read  time: 9063  average write time: 1294.000000
+Total       time: 20929  average total time: 2092.000000
+
+Child with pid: 3082
+Total write time: 43841  average read  time: 14613.000000
+Total read  time: 8705  average write time: 1243.000000
+Total       time: 52546  average total time: 5254.000000
+
+Child with pid: 3087
+Total write time: 30950  average read  time: 7737.000000
+Total read  time: 12785  average write time: 2130.000000
+Total       time: 43735  average total time: 4373.000000
+
+Child with pid: 3080
+Total write time: 24493  average read  time: 4898.000000
+Total read  time: 25880  average write time: 5176.000000
+Total       time: 50373  average total time: 5037.000000
+
+Child with pid: 3088
+Total write time: 60228  average read  time: 15057.000000
+Total read  time: 26832  average write time: 4472.000000
+Total       time: 87060  average total time: 8706.000000
+
+Child with pid: 3079
+Total write time: 0  average read  time: 0.000000
+Total read  time: 87005  average write time: 8700.000000
+Total       time: 87005  average total time: 8700.000000
+
+Child with pid: 3084
+Total write time: 65073  average read  time: 10845.000000
+Total read  time: 8421  average write time: 2105.000000
+Total       time: 73494  average total time: 7349.000000
+
+Child with pid: 3081
+Total write time: 7  average read  time: 1.000000
+Total read  time: 94745  average write time: 15790.000000
+Total       time: 94752  average total time: 9475.000000
+
+
+     ***VALIDATING RESULTS*** 
+
+Shared -> 0   Readers -> 8   Writers -> 3
+Shared -> 1   Readers -> 4   Writers -> 2
+Shared -> 2   Readers -> 5   Writers -> 4
+Shared -> 3   Readers -> 4   Writers -> 1
+Shared -> 4   Readers -> 7   Writers -> 1
+Shared -> 5   Readers -> 9   Writers -> 7
+Shared -> 6   Readers -> 8   Writers -> 2
+Shared -> 7   Readers -> 8   Writers -> 3
+Shared -> 8   Readers -> 8   Writers -> 5
+Shared -> 9   Readers -> 6   Writers -> 5
+___________________________________________
+Total +       Readers -> 67   Writers -> 33   Total -> 100
+
+Total must be peers * LOOPS which is -> 100
+ Correct!!! 

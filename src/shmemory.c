@@ -2,7 +2,8 @@
 
 int ShmInit(key_t key, int size){
     int shmId;
-    if((shmId = shmget (key, size, IPC_CREAT | 0666)) == -1) return -1;
+    if((shmId = shmget (key, size, IPC_CREAT | 0666)) == -1){
+        printf(" Error Shared memory %d\n",size); return -1;}
     return shmId;
 }
 

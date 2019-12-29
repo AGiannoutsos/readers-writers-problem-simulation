@@ -13,10 +13,10 @@ union semun {
 };   
 
 //Create and init semaphores
-int SemInit(key_t key, int num);
+int SemInit(key_t key, int numSems);
 
 //Delete semaphores
-int SemDel(int semId);
+int SemDel(int semId, int numSems);
 
 //sem Up
 int SemUp(int semId,int semNum);

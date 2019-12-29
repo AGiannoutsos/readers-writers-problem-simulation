@@ -9,19 +9,23 @@ int SemInit(key_t key, int numSems){
 
     union semun sem_union;
 	sem_union.val = 1;
-	if (semctl(semId, 0, SETVAL, sem_union) == -1){
-        printf(" Error semaphore init failed\n ");
-        return 0;
-    }
+
+	for (int i = 0; i < numSems; i++){
+		if (semctl(semId, i, SETVAL, sem_union) == -1){
+			printf(" Error semaphore init failed %d\n ",numSems);
+			return 0;
+		}
+	}
+	
+		
     return semId;
 }
 
-int SemDel(int semId){
+int SemDel(int semId, int numSems){
 
     union semun sem_union;
-
-	if (semctl(semId, 0, IPC_RMID, sem_union) == -1)
-	printf(" Error semaphore didnt close \n");
+	semctl(semId, 0, IPC_RMID, sem_union);
+	
 }
 
 int SemUp(int semId, int semNum){
@@ -30,10 +34,10 @@ int SemUp(int semId, int semNum){
 
 	sem_b.sem_num = semNum;
 	sem_b.sem_op = 1; /* V() */
-	sem_b.sem_flg = SEM_UNDO;
+	sem_b.sem_flg = 0;
 
 	if (semop(semId, &sem_b, 1) == -1) {
-		printf(" Error semaphore up \n");
+		printf(" Error semaphore up %d\n",semNum);
 		return(0);
 	}
 	return(1);
@@ -45,10 +49,10 @@ int SemDown(int semId, int semNum){
 
 	sem_b.sem_num = semNum;
 	sem_b.sem_op = -1; /* V() */
-	sem_b.sem_flg = SEM_UNDO;
+	sem_b.sem_flg = 0;
 
 	if (semop(semId, &sem_b, 1) == -1) {
-		printf(" Error semaphore up \n");
+		printf(" Error semaphore down %d \n",semNum);
 		return(0);
 	}
 	return(1);

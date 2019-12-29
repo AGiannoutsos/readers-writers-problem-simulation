@@ -1,2 +1,2 @@
 make mainexe
-./mainexe 10 70 10
+./mainexe 10 90 10
