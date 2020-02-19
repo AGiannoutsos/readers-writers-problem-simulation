@@ -40,14 +40,21 @@ For memory from [0,100]
 
 The below graph shows the sum of the waiting time of all the peers in relation to the memory size and the number of peers with a 50% ratio of readers and writers
 
-
 Z-axis is the total waiting time
 X and Y axes are the memory size and the number of peers
- 
 
-This chart is a projection of the above chart on the X-axis
 
-Now, this axis is the size of memory from 1 to 100 memory slots. We can observe the periodicity of the number of peers which is a result of the for loop. The dropping points are when peers are very few.
+![](3dchart.png)
+
+
+This chart is a projection of the above chart on the X-axis.
+Now, X-axis is the size of memory from 1 to 100 memory slots.
+
+
+![](2dwaitngtime.png)
+
+
+We can observe the periodicity of the number of peers which is a result of the for loop. The dropping points are when peers are very few.
 
 After excluding the extreme cases where peers are relative very few in relation to memory size, memory plays a more important role in waiting time.
 
